@@ -1,0 +1,81 @@
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
+@import "@fontsource/instrument-serif/400.css";
+@import "@fontsource/instrument-serif/400-italic.css";
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, "SFMono-Regular", monospace;
+  --font-serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+
+  --color-ink-950: #0b0c0e;
+  --color-ink-900: #121418;
+  --color-ink-850: #171a1f;
+  --color-ink-800: #1d2026;
+  --color-ink-700: #2a2e35;
+  --color-ink-600: #3a3f47;
+  --color-ink-400: #8a8e96;
+  --color-ink-300: #b4b7bc;
+
+  --color-paper-50: #f7f5f0;
+  --color-paper-100: #f1ede5;
+  --color-paper-200: #e6e0d4;
+  --color-paper-300: #d6cfc1;
+  --color-stone-500: #77736a;
+  --color-stone-600: #5e5b54;
+  --color-stone-800: #2b2a27;
+
+  --color-lime: #cdf545;
+  --color-lime-deep: #b6dd2a;
+
+  --radius-xs: 3px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --text-micro: 10.5px;
+  --text-micro--letter-spacing: 0.09em;
+}
+
+@layer base {
+  html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  body { @apply bg-paper-50 text-ink-950 font-sans; font-feature-settings: "ss01", "cv11"; }
+  ::selection { background: var(--color-lime); color: var(--color-ink-950); }
+  :focus-visible { outline: 2px solid var(--color-ink-950); outline-offset: 2px; }
+  .on-ink :focus-visible { outline-color: var(--color-lime); }
+  button { cursor: pointer; }
+}
+
+@utility tnum { font-variant-numeric: tabular-nums lining-nums; }
+@utility label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+@utility hairline-grid {
+  background-image:
+    linear-gradient(to right, rgb(247 245 240 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(247 245 240 / 0.045) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+@utility hatch {
+  background-image: repeating-linear-gradient(135deg, currentColor 0 1px, transparent 1px 4px);
+}
+@utility link-underline {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+  transition: text-decoration-color 160ms ease;
+  &:hover { text-decoration-color: currentColor; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+}

@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: opervia
+      POSTGRES_PASSWORD: opervia
+      POSTGRES_DB: opervia
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U opervia"]
+      interval: 5s
+      retries: 10
+    ports: ["5432:5432"]
+
+  server:
+    build: ./server
+    depends_on:
+      db: { condition: service_healthy }
+    environment:
+      DATABASE_URL: postgresql://opervia:opervia@db:5432/opervia
+      JWT_SECRET: ${JWT_SECRET:-local-compose-secret-change-me-0123456789}
+      CORS_ORIGIN: http://localhost:8080
+      COOKIE_SECURE: "false"
+      TRUST_PROXY: "true"
+      DEMO_LOGIN_ENABLED: "true"
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    ports: ["4000:4000"]
+
+  web:
+    build: ./web
+    depends_on: [server]
+    ports: ["8080:80"]
+
+volumes:
+  pgdata:
