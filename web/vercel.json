@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://opervia-8hxe.onrender.com/api/:path*"
+    }
+  ]
+}
